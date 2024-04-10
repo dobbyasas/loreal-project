@@ -1,0 +1,35 @@
+.login-page {
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    height: 100dvh;
+
+    h1 {
+        font-size: 50px;
+        margin-top: 30%;
+    }
+
+    p {
+        font-size: 20px;
+        color: #7A7A7A;
+    }
+  }
+  
+  .form-container {
+    width: auto;
+    margin: 5%;
+  }
+
+  .text-container {
+    margin: 0% 15% 0%;
+  }
+
+  .image-container {
+    width: auto;
+  }
+  
+  .image-container img {
+    width: auto;
+    height: 100vh;
+  }
