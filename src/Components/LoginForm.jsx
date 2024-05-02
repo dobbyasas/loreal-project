@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate  } from 'react-router-dom';
 import '../styles/LoginForm.scss';
 import Divider from '@mui/material/Divider';
 
 const LoginForm = () => {
+  const navigate = useNavigate(); 
   const [credentials, setCredentials] = useState({
     doctorId: '',
     email: ''
@@ -20,6 +22,9 @@ const LoginForm = () => {
     e.preventDefault();
     console.log(credentials);
     // Perform login logic here
+
+    // testing
+    navigate('/home');
   };
   
   const [focused, setFocused] = useState('');

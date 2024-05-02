@@ -1,0 +1,20 @@
+.small-header {
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
+
+    .small-header-logo {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+  
+      .logo {
+        max-height: 50px;
+        margin-right: 15px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+  

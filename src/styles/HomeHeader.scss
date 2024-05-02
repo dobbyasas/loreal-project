@@ -1,0 +1,64 @@
+.header {
+    padding: 20px;
+    list-style: none;
+    height: 60%;
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+
+    .header-logo {
+      grid-area: 1 / 1 / 2 / 4;
+      margin: 50px;
+
+      .logo {
+        max-height: 75px;
+        flex-direction: row;
+        margin: 10px;
+      }
+    }
+
+    .header-info {
+      grid-area: 2 / 1 / 4 / 4;
+      
+      padding: 50px;
+      padding-right: 30%;
+
+      h1 {
+        font-size: 34px;
+        font-weight: 450px;
+        margin-bottom: 20px;
+      }
+      p {
+          color: #7A7A7A;
+          font-size: 21px;
+          font-weight: 400px;
+      }
+    }
+
+    .header-profile {
+      grid-area: 1 / 4 / 4 / 6;
+      margin: 10%;
+      margin-left: 20%;
+
+      .profile-image {
+        width: 532px;
+        margin-bottom: 10px;
+      }
+
+      p {
+          color: #7A7A7A;
+          font-size: 19px;
+          font-weight: 400px;
+      }
+
+      h2 {
+          margin-bottom: 20px;
+          font-size: 19px;
+          font-weight: 500px;
+      }
+    }
+  }
+  

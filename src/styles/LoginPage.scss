@@ -7,7 +7,6 @@
 
     h1 {
         font-size: 50px;
-        margin-top: 30%;
     }
 
     p {
@@ -17,16 +16,27 @@
   }
   
   .form-container {
-    width: auto;
-    margin: 5%;
+    width: 60%;
+    padding: 5%;
   }
 
   .text-container {
-    margin: 0% 15% 0%;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: auto;
+    list-style: none;
+    width: 540px;
+    height: 327.47px;
+    top: 532.96px;
+    left: 185px;
+    gap: 0px;
+    opacity: 0px;
+    align-items: center;
   }
 
   .image-container {
     width: auto;
+    height: calc(100vh - 3px);
   }
   
   .image-container img {
