@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
-import Video from './pages/Video';
+import VideoPlayer from './pages/VideoPlayer';
 
 import './styles/App.scss';
 
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/video/:videoName" element={<Video />} />
+          <Route path="/video/:url" component={VideoPlayer} />
         </Routes>
       </Router>
     </>
