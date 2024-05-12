@@ -1,20 +1,40 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ReactPlayer from 'react-player';
+import { useEffect, useState } from 'react';
 
 import Header from '../Components/Header';
 
 const VideoPlayer = () => {
-  const { url } = useParams(); 
+    const { fileName } = useParams();
+    const [videoUrl, setVideoUrl] = useState('');
 
-  return (
-    <div>
-     <Header />
-     <div>
-        <ReactPlayer url={decodeURIComponent(url)} controls width="100%" height="100%" />
-      </div>
-    </div>
-  );
+    useEffect(() => {
+        // Fetch the video details from the JSON file
+        fetch('/data/video.json')
+            .then(response => response.json())
+            .then(data => {
+                const video = data.find(v => v.fileName === fileName);
+                if (video && video.url) {
+                    setVideoUrl(video.url);
+                } else {
+                    console.log("Video not found or no URL available");
+                }
+            })
+            .catch(error => console.error('Error loading video data:', error));
+    }, [fileName]);
+
+    return (
+        <div>
+          <Header/>
+            {videoUrl ? (
+                <video controls src={videoUrl} style={{ width: '100%' }}>
+                    Sorry, your browser does not support embedded videos.
+                </video>
+            ) : (
+                <p>Loading video...</p>
+            )}
+        </div>
+    );
 };
 
 export default VideoPlayer;

@@ -1,8 +1,13 @@
 import React from "react";
+import { useState } from "react";
 import '../styles/LoginPage.scss';
-import LoginForm from '../Components/LoginForm'
+import 'react-tabs/style/react-tabs.css';
+import RegisterForm from '../Components/RegisterForm'
+import LoginForm from "../Components/LoginForm";
 
 const LoginPage = () => {
+  const [ activeForm, setActiveForm ] = useState('register');
+
   return (
     <div className="login-page">
       <div className="form-container">
@@ -10,7 +15,15 @@ const LoginPage = () => {
             <h1>VÍTEJTE NA STRÁNKÁCH SCALP AND HAIR ACADEMY</h1>
             <p>Po přihlášení do systému budete přesměrování do galerie videí a fotografií z konference Scalp and Hair Academy 2024</p>
         </div>
-        <LoginForm />
+
+        <div className="button-group">
+          <button onClick={() => setActiveForm('register')}>Registrovat</button>
+          <button onClick={() => setActiveForm('login')}>Přihlásit</button>
+        </div>
+          {activeForm === 'register' && <RegisterForm/>}
+          {activeForm === 'login' && <LoginForm/>}
+        
+
       </div>
       <div className="image-container">
         <img src="/images/background.png" alt="Scalp and Hair Academy" />

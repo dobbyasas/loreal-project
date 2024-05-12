@@ -1,77 +1,87 @@
 import React, { useState } from 'react';
-import { useNavigate  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/LoginForm.scss';
 import Divider from '@mui/material/Divider';
 
+// const supabaseUrl = 'https://qlwylaqkynxaljlctznm.supabase.co';
+// const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3lsYXFreW54YWxqbGN0em5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQwNTcyMzEsImV4cCI6MjAyOTYzMzIzMX0.IDuXkcQY163Nrm4tWl8r3AMHAEetc_rdz4AyBNuJRIE';
+// const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
 const LoginForm = () => {
-  const navigate = useNavigate(); 
-  const [credentials, setCredentials] = useState({
-    doctorId: '',
-    email: ''
-  });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(credentials);
-    // Perform login logic here
-
-    // testing
-    navigate('/home');
-  };
-  
-  const [focused, setFocused] = useState('');
-
-  const handleFocus = (name) => {
-    setFocused(name);
-  };
-
-  const handleBlur = () => {
-    setFocused('');
+    try {
+      // Replace with your custom login logic
+      // const { user, error } = await supabase.auth.signInWithPassword({
+      //     username: username,
+      //     password: password
+      // });
+      
+      // Placeholder logic: Simulate a successful login
+      if (username === 'admin' && password === 'GodMode2024') {
+        navigate('/admin');
+      } else if (username === 'user' && password === 'password123') {
+        navigate('/home');
+      } else {
+        throw new Error('Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setError('Přihlášení selhalo, špatné jméno nebo heslo.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit} className="login-form">
+      <form onSubmit={handleLogin} className="login-form">
         <h2>Přihlášení</h2>
         <Divider component="li" />
         <br />
         <div className="form-group">
-        <label htmlFor="doctorId" className="form-label">
+          <label htmlFor="username" className="form-label">
             Identifikační číslo lékaře:
-        </label>
+          </label>
           <input
             type="text"
-            id="doctorId"
-            name="doctorId"
-            value={credentials.doctorId}
-            onChange={handleChange}
+            id="username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Zde napište ..."
+            required
           />
         </div>
         <br /><br />
         <div className="form-group">
-        <label htmlFor="email" className="form-label">
-            E-mailová adresa:
-        </label>
+          <label htmlFor="password" className="form-label">
+            Heslo:
+          </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={credentials.email}
-            onChange={handleChange}
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Zde napište ..."
+            required
           />
         </div>
-        <button type="submit" className="login-button">Přihlásit</button>
+        <button type="submit" className="login-button" disabled={loading}>
+          {loading ? 'Načítání...' : 'Přihlásit'}
+        </button>
       </form>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };
