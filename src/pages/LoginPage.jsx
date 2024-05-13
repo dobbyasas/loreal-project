@@ -6,7 +6,7 @@ import RegisterForm from '../Components/RegisterForm'
 import LoginForm from "../Components/LoginForm";
 
 const LoginPage = () => {
-  const [ activeForm, setActiveForm ] = useState('register');
+  const [activeForm, setActiveForm] = useState('register');
 
   return (
     <div className="login-page">
@@ -17,13 +17,21 @@ const LoginPage = () => {
         </div>
 
         <div className="button-group">
-          <button onClick={() => setActiveForm('register')}>Registrovat</button>
-          <button onClick={() => setActiveForm('login')}>Přihlásit</button>
+          <button 
+            className={activeForm === 'register' ? 'active' : ''} 
+            onClick={() => setActiveForm('register')}
+          >
+            Registrovat
+          </button>
+          <button 
+            className={activeForm === 'login' ? 'active' : ''} 
+            onClick={() => setActiveForm('login')}
+          >
+            Přihlásit
+          </button>
         </div>
-          {activeForm === 'register' && <RegisterForm/>}
-          {activeForm === 'login' && <LoginForm/>}
-        
-
+        {activeForm === 'register' && <RegisterForm />}
+        {activeForm === 'login' && <LoginForm />}
       </div>
       <div className="image-container">
         <img src="/images/background.png" alt="Scalp and Hair Academy" />

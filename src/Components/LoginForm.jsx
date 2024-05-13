@@ -45,7 +45,6 @@ const LoginForm = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleLogin} className="login-form">
-        <h2>Přihlášení</h2>
         <Divider component="li" />
         <br />
         <div className="form-group">

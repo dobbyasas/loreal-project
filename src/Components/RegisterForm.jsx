@@ -18,8 +18,7 @@ const RegisterForm = () => {
         </div>
         )}
       <form className="login-form">
-        <h2>Registrace</h2>
-        <h6>Po kliknutí na tlačitko registrace Vám bude po ověření identity na email posláno heslo pro přihlášení.</h6>
+        
         <Divider component="li" />
         <br />
         <div className="form-group">
@@ -45,7 +44,8 @@ const RegisterForm = () => {
             placeholder="Zde napište ..."
           />
         </div>
-        <button type="submit" className="login-button">Registrovat</button>
+        <button type="submit" className="login-button">Registrovat*</button>
+        <h5>*Po kliknutí na tlačitko registrace Vám bude po ověření identity na email posláno heslo pro přihlášení.</h5>
       </form>
     </div>
   );
