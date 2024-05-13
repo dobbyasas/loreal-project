@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   height: 100vh;
+  padding: 20px;
 
   h1 {
     font-size: 50px;
@@ -13,11 +14,48 @@
     font-size: 20px;
     color: #7A7A7A;
   }
+
+  @media (max-width: 1024px) { // Tablet view
+    flex-direction: column;
+    height: auto;
+
+    h1 {
+      font-size: 40px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    h1 {
+      font-size: 30px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 16px;
+      text-align: center;
+    }
+  }
 }
 
 .form-container {
   width: 60%;
   padding: 5%;
+
+  @media (max-width: 1024px) { // Tablet view
+    width: 80%;
+    padding: 2%;
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    width: 100%;
+    padding: 2%;
+  }
 }
 
 .text-container {
@@ -28,39 +66,91 @@
   width: 540px;
   height: 327.47px;
   align-items: center;
+
+  @media (max-width: 1024px) { // Tablet view
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
 }
 
 .image-container {
   width: auto;
   height: calc(100vh - 3px);
+
+  @media (max-width: 1024px) { // Tablet view
+    height: 50vh;
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    display: none; // Hide the image on mobile for a cleaner layout
+  }
 }
 
 .image-container img {
   width: auto;
   height: 100vh;
+
+  @media (max-width: 1024px) { // Tablet view
+    height: 50vh;
+  }
 }
 
 .button-group {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
+  margin-top: 20px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -10px; // Adjust based on your design needs
+    height: 3px; // Height of the border
+    left: var(--border-left, 0); // Start at 0 or adjusted based on initial state
+    width: var(--border-width, 0); // Start with 0 width or width of the initial active button
+    background-color: #7A7A7A;
+    transition: left 0.5s ease, width 0.5s ease;
+  }
+
+  @media (max-width: 1024px) { // Tablet view
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    gap: 8px;
+  }
 }
 
 button {
-  padding: 10px;
+  padding: 10px 20px;
   background-color: #ffffff;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: all 0.3s ease;
-}
-
-button.active {
-  border: 1px solid #7A7A7A;
   border-radius: 25px;
-}
-
-button:not(.active) {
-  color: #7A7A7A;
   border: none;
+  transition: color 0.3s ease;
+
+  &:not(.active) {
+    color: #7A7A7A;
+    background: transparent;
+  }
+
+  @media (max-width: 1024px) { // Tablet view
+    padding: 8px 16px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) { // Mobile view
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
 }
