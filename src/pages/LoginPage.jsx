@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import RegisterForm from '../Components/RegisterForm'
+import RegisterForm from '../Components/RegisterForm';
 import LoginForm from "../Components/LoginForm";
 import '../styles/LoginPage.scss';
 
