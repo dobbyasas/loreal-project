@@ -18,7 +18,6 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate fields
     if (!doctorId || !email) {
       setError('Vyplňte prosím všechna pole.');
       setInvalidDoctorId(!doctorId);
@@ -27,7 +26,6 @@ const RegisterForm = () => {
     }
 
     try {
-      // Check if the doctor ID or email already exists in the "pending" table
       const { data: existingDoctorId, error: doctorIdError } = await supabase
         .from('pending')
         .select('*')
@@ -52,7 +50,6 @@ const RegisterForm = () => {
         return;
       }
 
-      // Insert the data into the "pending" table
       const { data, error } = await supabase
         .from('pending')
         .insert([{ doctor_id: doctorId, email: email }]);
@@ -62,7 +59,7 @@ const RegisterForm = () => {
       }
 
       setSubmitted(true);
-      setError(null); // Clear any previous error
+      setError(null);
     } catch (error) {
       setError('There was an error submitting the form. Please try again.');
       console.error('Error:', error);

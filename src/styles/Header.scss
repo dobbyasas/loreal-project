@@ -1,10 +1,8 @@
-// Header.scss
-
 .small-header {
   padding: 8px 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between; // Added to space out the logo and button
+  justify-content: space-between;
 
   .small-header-logo {
       display: flex;
@@ -21,7 +19,7 @@
   }
 
   .home-button {
-      background-color: #007BFF; // Primary color
+      background-color: #007BFF;
       color: white;
       border: none;
       border-radius: 5px;
@@ -31,13 +29,13 @@
       transition: background-color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-          background-color: #0056b3; // Darker shade for hover effect
-          transform: scale(1.05); // Slightly enlarge the button on hover
+          background-color: #0056b3;
+          transform: scale(1.05);
       }
 
       &:focus {
           outline: none;
-          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); // Focus ring
+          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
       }
   }
 }

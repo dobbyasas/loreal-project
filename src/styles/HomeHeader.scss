@@ -59,7 +59,7 @@
   }
 }
 
-@media (max-width: 1024px) { // Tablet view
+@media (max-width: 1024px) {
   .header {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
@@ -80,7 +80,7 @@
   }
 }
 
-@media (max-width: 768px) { // Mobile view
+@media (max-width: 768px) {
   .header {
     padding: 20px;
     gap: 20px;

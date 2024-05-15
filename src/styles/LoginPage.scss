@@ -29,7 +29,7 @@
     }
   }
 
-  @media (max-width: 768px) { // Mobile view
+  @media (max-width: 768px) {
     h1 {
       font-size: 30px;
     }
@@ -44,7 +44,7 @@
   width: 60%;
   padding: 5%;
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     width: 80%;
     padding: 2%;
     display: flex;
@@ -52,7 +52,7 @@
     align-items: center;
   }
 
-  @media (max-width: 768px) { // Mobile view
+  @media (max-width: 768px) {
     width: 100%;
     padding: 2%;
     display: flex;
@@ -70,14 +70,14 @@
   height: 327.47px;
   align-items: center;
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     width: 100%;
     height: auto;
     padding: 1rem;
     text-align: center;
   }
 
-  @media (max-width: 768px) { // Mobile view
+  @media (max-width: 768px) {
     width: 100%;
     height: auto;
     padding: 1rem;
@@ -89,12 +89,12 @@
   width: auto;
   height: calc(100vh - 3px);
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     height: 50vh;
   }
 
-  @media (max-width: 768px) { // Mobile view
-    display: none; // Hide the image on mobile for a cleaner layout
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
@@ -102,7 +102,7 @@
   width: auto;
   height: 100vh;
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     height: 50vh;
   }
 }
@@ -118,19 +118,19 @@
   &:after {
     content: '';
     position: absolute;
-    bottom: -10px; // Adjust based on your design needs
-    height: 3px; // Height of the border
-    left: var(--border-left, 0); // Start at 0 or adjusted based on initial state
-    width: var(--border-width, 0); // Start with 0 width or width of the initial active button
+    bottom: -10px;
+    height: 3px;
+    left: var(--border-left, 0);
+    width: var(--border-width, 0);
     background-color: #7A7A7A;
     transition: left 0.5s ease, width 0.5s ease;
   } 
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     gap: 12px;
   }
 
-  @media (max-width: 768px) { // Mobile view
+  @media (max-width: 768px) {
     gap: 8px;
   }
 }
@@ -149,12 +149,12 @@ button {
     background: transparent;
   }
 
-  @media (max-width: 1024px) { // Tablet view
+  @media (max-width: 1024px) {
     padding: 8px 16px;
     font-size: 1rem;
   }
 
-  @media (max-width: 768px) { // Mobile view
+  @media (max-width: 768px) {
     padding: 6px 12px;
     font-size: 0.9rem;
   }

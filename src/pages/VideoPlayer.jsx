@@ -10,7 +10,6 @@ const VideoPlayer = () => {
     const [videoUrl, setVideoUrl] = useState('');
 
     useEffect(() => {
-        // Fetch the video details from the JSON file
         fetch('/data/video.json')
             .then(response => response.json())
             .then(data => {
