@@ -20,7 +20,7 @@ const LoginPage = () => {
     };
 
     updateBorder();
-    window.addEventListener('resize', updateBorder); // Adjust on window resize
+    window.addEventListener('resize', updateBorder);
     return () => window.removeEventListener('resize', updateBorder);
   }, [activeForm]);
 

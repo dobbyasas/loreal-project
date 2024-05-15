@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import Header from '../Components/Header';
+import '../styles/VideoPlayer.scss';
 
 const VideoPlayer = () => {
     const { fileName } = useParams();
@@ -24,14 +25,19 @@ const VideoPlayer = () => {
     }, [fileName]);
 
     return (
-        <div>
-          <Header/>
+        <div className="video-player-container">
+            <Header />
             {videoUrl ? (
-                <video controls src={videoUrl} style={{ width: '100%' }}>
-                    Sorry, your browser does not support embedded videos.
+                <video
+                    controls
+                    src={videoUrl}
+                    controlsList="nodownload"
+                    style={{ width: '100%' }}
+                >
+                    Váš prohlížeč nedovoluje přehrávat vložené videa, použijte jiný prohlížeč.
                 </video>
             ) : (
-                <p>Loading video...</p>
+                <p>Načítám vide...</p>
             )}
         </div>
     );
