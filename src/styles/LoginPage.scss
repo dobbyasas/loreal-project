@@ -124,7 +124,7 @@
     width: var(--border-width, 0); // Start with 0 width or width of the initial active button
     background-color: #7A7A7A;
     transition: left 0.5s ease, width 0.5s ease;
-  }
+  } 
 
   @media (max-width: 1024px) { // Tablet view
     gap: 12px;

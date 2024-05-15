@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React from "react";
 import Divider from '@mui/material/Divider';
 import '../styles/HomeHeader.scss';
 
@@ -21,7 +20,7 @@ const Header = () => {
       </div>
       <div className="header-profile">
         <img src="/images/monika.png" alt="Prof. MUDr. Monika Arenbergerová, Ph.D." className="profile-image" />
-        <div className="name-aree">
+        <div className="name-area">
           <h2>prof. MUDr. Monika Arenbergerová, Ph.D.</h2>
           <Divider component="li" />
           <p>garant</p>
