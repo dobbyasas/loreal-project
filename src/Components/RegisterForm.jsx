@@ -7,7 +7,7 @@ const supabaseUrl = 'https://qlwylaqkynxaljlctznm.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3lsYXFreW54YWxqbGN0em5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQwNTcyMzEsImV4cCI6MjAyOTYzMzIzMX0.IDuXkcQY163Nrm4tWl8r3AMHAEetc_rdz4AyBNuJRIE';
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-const RegisterForm = () => {  
+const RegisterForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [doctorId, setDoctorId] = useState('');
   const [email, setEmail] = useState('');
@@ -68,57 +68,58 @@ const RegisterForm = () => {
 
   return (
     <div className="login-container">
-      {submitted && (
+      {submitted ? (
         <div className="announcement">
           <h4>Prosím zkontrolujte svůj e-mail pro další instrukce.</h4>
         </div>
+      ) : (
+        <form className="login-form" onSubmit={handleSubmit}>
+          <Divider component="li" />
+          <br />
+          <div className="form-group">
+            <label htmlFor="doctorId" className="form-label">
+              Identifikační číslo lékaře:
+            </label>
+            <input
+              type="text"
+              id="doctorId"
+              name="doctorId"
+              placeholder="Zde napište ..."
+              value={doctorId}
+              onChange={(e) => {
+                setDoctorId(e.target.value);
+                if (e.target.value) setInvalidDoctorId(false);
+              }}
+              className={invalidDoctorId ? 'invalid' : ''}
+            />
+          </div>
+          <br /><br />
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">
+              E-mailová adresa:
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Zde napište ..."
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (e.target.value) setInvalidEmail(false);
+              }}
+              className={invalidEmail ? 'invalid' : ''}
+            />
+          </div>
+          <button type="submit" className="login-button">Registrovat*</button>
+          {error && (
+            <div className="error">
+              <p>{error}</p>
+            </div>
+          )}
+          <h5>*Po kliknutí na tlačitko registrace Vám bude po ověření identity na email posláno heslo pro přihlášení.</h5>
+        </form>
       )}
-      <form className="login-form" onSubmit={handleSubmit}>
-        <Divider component="li" />
-        <br />
-        <div className="form-group">
-          <label htmlFor="doctorId" className="form-label">
-            Identifikační číslo lékaře:
-          </label>
-          <input
-            type="text"
-            id="doctorId"
-            name="doctorId"
-            placeholder="Zde napište ..."
-            value={doctorId}
-            onChange={(e) => {
-              setDoctorId(e.target.value);
-              if (e.target.value) setInvalidDoctorId(false);
-            }}
-            className={invalidDoctorId ? 'invalid' : ''}
-          />
-        </div>
-        <br /><br />
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">
-            E-mailová adresa:
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Zde napište ..."
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-              if (e.target.value) setInvalidEmail(false);
-            }}
-            className={invalidEmail ? 'invalid' : ''}
-          />
-        </div>
-        <button type="submit" className="login-button">Registrovat*</button>
-        {error && (
-        <div className="error">
-          <p>{error}</p>
-        </div>
-      )}
-        <h5>*Po kliknutí na tlačitko registrace Vám bude po ověření identity na email posláno heslo pro přihlášení.</h5>
-      </form>
     </div>
   );
 };

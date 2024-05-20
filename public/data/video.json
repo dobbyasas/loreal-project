@@ -61,37 +61,26 @@
         "fileName": "i.mp4",
         "thumbnail": "images/thumbnails/todorova.png",
         "url": "https://qlwylaqkynxaljlctznm.supabase.co/storage/v1/object/public/videakrystof/i.mp4?t=2024-05-12T18%3A54%3A46.377Z"
-    }
-    ,
+    },
     {
         "id": 10,
-        "customName": "",
+        "customName": "MUDr. Andrea Nestorová",
         "fileName": "j.mp4",
-        "thumbnail": "images/thumbnails/.png",
-        "url": ""
-    }
-    ,
+        "thumbnail": "images/thumbnails/nestorova.png",
+        "url": "https://qlwylaqkynxaljlctznm.supabase.co/storage/v1/object/public/videakrystof/j.mp4?t=2024-05-20T15%3A31%3A21.131Z"
+    },
     {
         "id": 11,
-        "customName": "",
+        "customName": "MUDr. Elizabeth Pavlíčková",
         "fileName": "k.mp4",
-        "thumbnail": "images/thumbnails/.png",
-        "url": ""
-    }
-    ,
+        "thumbnail": "images/thumbnails/pavlickova.png",
+        "url": "https://qlwylaqkynxaljlctznm.supabase.co/storage/v1/object/public/videakrystof/k.mp4?t=2024-05-20T15%3A35%3A34.198Z"
+    },
     {
         "id": 12,
-        "customName": "",
+        "customName": "MUDr. Veronika Slonková",
         "fileName": "l.mp4",
-        "thumbnail": "images/thumbnails/.png",
-        "url": ""
-    }
-    ,
-    {
-        "id": 13,
-        "customName": "",
-        "fileName": "m.mp4",
-        "thumbnail": "images/thumbnails/.png",
-        "url": ""
+        "thumbnail": "images/thumbnails/slonkova.png",
+        "url": "https://qlwylaqkynxaljlctznm.supabase.co/storage/v1/object/public/videakrystof/l.mp4?t=2024-05-20T15%3A38%3A26.783Z"
     }
 ]

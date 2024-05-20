@@ -31,10 +31,12 @@ const VideoPlayer = () => {
                     controls
                     src={videoUrl}
                     controlsList="nodownload"
+                    preload="metadata"
                     style={{ width: '100%' }}
                 >
                     Váš prohlížeč nedovoluje přehrávat vložené videa, použijte jiný prohlížeč.
                 </video>
+
             ) : (
                 <p>Načítám vide...</p>
             )}

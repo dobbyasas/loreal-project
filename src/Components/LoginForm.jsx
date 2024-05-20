@@ -85,6 +85,7 @@ const LoginForm = () => {
         <button type="submit" className="login-button" disabled={loading}>
           {loading ? 'Načítání...' : 'Přihlásit'}
         </button>
+        <h5 style={{ color: "white" }}>*Po kliknutí na tlačitko registrace Vám bude po ověření identity na email posláno heslo pro přihlášení.</h5>
       </form>
       {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
