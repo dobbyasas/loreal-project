@@ -29,38 +29,37 @@ const VideoPlayer = () => {
         let totalSecondsWatched = 0;
 
         const logTimeWatched = async (additionalTime) => {
-          try {
-              // Check if there's already a row for this user and video
-              const { data: existingRecord, error } = await supabase
-                  .from('video_views')
-                  .select('*')
-                  .eq('user_id', user.id)
-                  .eq('video_id', fileName)
-                  .single();
-      
-              if (error && error.code !== 'PGRST116') { // Ignore no rows found error
-                  throw error;
-              }
-      
-              if (existingRecord) {
-                  // Update the existing record
-                  const newTimeWatched = existingRecord.time_watched + additionalTime;
-                  await supabase
-                      .from('video_views')
-                      .update({ time_watched: newTimeWatched })
-                      .eq('user_id', user.id)
-                      .eq('video_id', fileName);
-              } else {
-                  // Insert a new record
-                  await supabase
-                      .from('video_views')
-                      .insert({ user_id: user.id, video_id: fileName, time_watched: additionalTime });
-              }
-          } catch (error) {
-              console.error('Error logging time watched:', error);
-          }
-      };
-      
+            try {
+                // Check if there's already a row for this user and video
+                const { data: existingRecord, error } = await supabase
+                    .from('video_views')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .eq('video_id', fileName)
+                    .single();
+
+                if (error && error.code !== 'PGRST116') { // Ignore no rows found error
+                    throw error;
+                }
+
+                if (existingRecord) {
+                    // Update the existing record
+                    const newTimeWatched = existingRecord.time_watched + additionalTime;
+                    await supabase
+                        .from('video_views')
+                        .update({ time_watched: newTimeWatched })
+                        .eq('user_id', user.id)
+                        .eq('video_id', fileName);
+                } else {
+                    // Insert a new record
+                    await supabase
+                        .from('video_views')
+                        .insert({ user_id: user.id, video_id: fileName, time_watched: additionalTime });
+                }
+            } catch (error) {
+                console.error('Error logging time watched:', error);
+            }
+        };
 
         if (videoUrl && user) {
             interval = setInterval(() => {
