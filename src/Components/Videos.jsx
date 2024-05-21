@@ -8,29 +8,29 @@ const Videos = () => {
 
     useEffect(() => {
         fetch('data/video.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => setVideos(data))
-        .catch(error => console.error('Error loading the videos data:', error));
-}, []);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => setVideos(data))
+            .catch(error => console.error('Error loading the videos data:', error));
+    }, []);
 
     const handleVideoClick = (fileName) => {
-      navigate(`/video/${encodeURIComponent(fileName)}`);
+        navigate(`/video/${encodeURIComponent(fileName)}`);
     };
 
     return (
-      <div className="video-gallery">
-        {videos.map(video => (
-          <div className="video-item" key={video.id} onClick={() => handleVideoClick(video.fileName)}>
-            <img src={video.thumbnail} alt={`Thumbnail for ${video.customName}`} />
-            <p>{video.customName}</p>
-          </div>
-        ))}
-      </div>
+        <div className="video-gallery">
+            {videos.map(video => (
+                <div className="video-item" key={video.id} onClick={() => handleVideoClick(video.fileName)}>
+                    <img src={video.thumbnail} alt={`Thumbnail for ${video.customName}`} />
+                    <p>{video.customName}</p>
+                </div>
+            ))}
+        </div>
     );
 };
 
