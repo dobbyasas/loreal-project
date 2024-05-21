@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
 import '../styles/Admin.scss';
 
-const supabaseUrl = 'https://qlwylaqkynxaljlctznm.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3lsYXFreW54YWxqbGN0em5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQwNTcyMzEsImV4cCI6MjAyOTYzMzIzMX0.IDuXkcQY163Nrm4tWl8r3AMHAEetc_rdz4AyBNuJRIE';
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const Admin = () => {
     const [pendingEntries, setPendingEntries] = useState([]);
+    const [userVideoData, setUserVideoData] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -25,7 +26,53 @@ const Admin = () => {
             }
         };
 
+        const fetchUserVideoData = async () => {
+            try {
+                let { data: users, error: userError } = await supabase
+                    .from('users')
+                    .select('*');
+
+                if (userError) throw userError;
+
+                let { data: videoViews, error: videoError } = await supabase
+                    .from('video_views')
+                    .select('*');
+
+                if (videoError) throw videoError;
+
+                const response = await fetch('/data/video.json');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const videos = await response.json();
+
+                // Aggregate data
+                const aggregatedData = users.map(user => {
+                    const userViews = videoViews.filter(view => view.user_id === user.id);
+                    const videosWatched = userViews.map(view => {
+                        const video = videos.find(v => v.fileName === view.video_id);
+                        const duration = video ? video.duration : 0;
+                        const watchedPercentage = (view.time_watched / duration) * 100;
+                        const finished = watchedPercentage >= 85;
+                        return {
+                            videoName: video ? video.customName : view.video_id,
+                            timeWatched: view.time_watched,
+                            finished
+                        };
+                    });
+                    return {
+                        ...user,
+                        videosWatched
+                    };
+                });
+
+                setUserVideoData(aggregatedData);
+            } catch (error) {
+                setError('Failed to fetch user video data from the database.');
+                console.error('Error:', error);
+            }
+        };
+
         fetchPendingEntries();
+        fetchUserVideoData();
     }, []);
 
     const handleRemove = async (id) => {
@@ -75,6 +122,13 @@ const Admin = () => {
         }
     };
 
+    const formatTime = (seconds) => {
+        const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+        return `${h}:${m}:${s}`;
+    };
+
     return (
         <div className="admin-container">
             <h1>Tabulka uživatelů, čekajících na schválení</h1>
@@ -104,6 +158,34 @@ const Admin = () => {
                     ))}
                 </tbody>
             </table>
+            <h1>Statistiky uživatelů</h1>
+            {userVideoData.map(user => (
+                <div key={user.id} className="user-stats">
+                    <h2>{`Lékař ID: ${user.doctor_id} (${user.email})`}</h2>
+                    {user.videosWatched.length > 0 ? (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Název videa</th>
+                                    <th>Čas sledování</th>
+                                    <th>Stav</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {user.videosWatched.map((video, index) => (
+                                    <tr key={index}>
+                                        <td>{video.videoName}</td>
+                                        <td>{formatTime(video.timeWatched)}</td>
+                                        <td>{video.finished ? 'Dokončeno' : 'Nedokončeno'}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    ) : (
+                        <p>Uživatel zatím nesledoval žádné video.</p>
+                    )}
+                </div>
+            ))}
         </div>
     );
 }
