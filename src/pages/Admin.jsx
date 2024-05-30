@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
 import emailjs from 'emailjs-com';
-import Header from '../components/Header';
+import Header from '../Components/Header';
 import Sidebar from "../components/Sidebar";
 import '../styles/Admin.scss';
 
