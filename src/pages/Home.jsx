@@ -2,7 +2,7 @@ import React from 'react';
 
 import HomeHeader from '../Components/HomeHeader';
 import Videos from '../Components/Videos';
-import Footer from '../components/Footer';
+import Footer from '../Components/Footer';
 
 import '../styles/Home.scss';
 
