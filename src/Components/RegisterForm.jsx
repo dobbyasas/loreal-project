@@ -61,7 +61,10 @@ const RegisterForm = () => {
     <div className="register-container">
       {submitted ? (
         <div className="success-message">
-          <p><b>Děkujeme vám za zájem o přednášky ze Scalp and Hair Academy. Vaše žádost byla zaslána administrátorovi stránky a až bude potvrzena, obdržíte e-mail s možností přihlášení. V případě nejasností prosím kontaktujte zástupce společnosti L’Oréal.</b></p>
+          <p><b>Děkujeme vám za zájem o přednášky ze Scalp and Hair Academy. </b></p>
+          <p><b>Vaše žádost byla zaslána administrátorovi stránky a až bude potvrzena, obdržíte e-mail s možností přihlášení. </b></p>
+          <p><b>V případě nejasností prosím kontaktujte zástupce společnosti L’Oréal.</b></p>
+          
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="register-form">
