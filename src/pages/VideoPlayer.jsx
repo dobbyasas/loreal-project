@@ -13,6 +13,7 @@ const VideoPlayer = () => {
     const videoRef = useRef(null);
 
     useEffect(() => {
+        console.log('Fetching video data...');
         fetch('/data/video.json')
             .then(response => response.json())
             .then(data => {
@@ -29,6 +30,7 @@ const VideoPlayer = () => {
     useEffect(() => {
         const fetchWatchHistory = async () => {
             try {
+                console.log(`Fetching watch history for user: ${user.id}, video: ${fileName}`);
                 const { data: existingRecord, error } = await supabase
                     .from('video_views')
                     .select('time_watched')
@@ -61,15 +63,18 @@ const VideoPlayer = () => {
                 videoRef.current.currentTime = initialTime;
             }
             setIsMetadataLoaded(true);
+            console.log('Video metadata loaded');
         };
 
         const videoElement = videoRef.current;
         if (videoElement) {
+            console.log('Adding loadedmetadata event listener');
             videoElement.addEventListener('loadedmetadata', handleLoadedMetadata);
         }
 
         return () => {
             if (videoElement) {
+                console.log('Removing loadedmetadata event listener');
                 videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata);
             }
         };
@@ -123,9 +128,11 @@ const VideoPlayer = () => {
         };
 
         if (videoUrl && user && isMetadataLoaded) {
+            console.log('Starting interval to log time watched');
             interval = setInterval(() => {
                 if (videoRef.current) {
                     const currentTime = videoRef.current.currentTime;
+                    console.log(`Current video time: ${currentTime} seconds`);
                     logTimeWatched(currentTime);
                 }
             }, 10000);
@@ -136,6 +143,7 @@ const VideoPlayer = () => {
             if (videoRef.current) {
                 const finalTime = videoRef.current.currentTime;
                 if (user && finalTime > 0) {
+                    console.log(`Logging final time watched: ${finalTime} seconds`);
                     logTimeWatched(finalTime);
                 }
             }
