@@ -81,6 +81,8 @@ const VideoPlayer = () => {
         const logTimeWatched = async (currentTime) => {
             const roundedTime = Math.round(currentTime);
             try {
+                console.log(`Logging time watched: ${roundedTime} seconds for user: ${user.id} and video: ${fileName}`);
+                
                 const { data: existingRecord, error } = await supabase
                     .from('video_views')
                     .select('time_watched')
