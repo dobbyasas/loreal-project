@@ -46,7 +46,6 @@ const RegisterForm = () => {
         return;
       }
 
-
       const { data, error } = await supabase
         .from('pending')
         .insert([{ doctor_id: doctorId, name: name, surname: surname, email: email }]);
@@ -62,61 +61,66 @@ const RegisterForm = () => {
 
   return (
     <div className="register-container">
-      <form onSubmit={handleSubmit} className="register-form">
-        <Divider component="li" />
-        <br />
-        <div className="form-group">
-          <label htmlFor="doctorId" className="form-label">Identifikační číslo lékaře:</label>
-          <input
-            type="text"
-            id="doctorId"
-            value={doctorId}
-            onChange={(e) => setDoctorId(e.target.value)}
-            placeholder="Zde napište ..."
-            required
-          />
+      {submitted ? (
+        <div className="success-message">
+          <p><b>Registrace úspěšná! Zkontrolujte svůj e-mail pro další instrukce.</b></p>
         </div>
-        <br />
-        <div className="form-group">
-          <label htmlFor="name" className="form-label">Jméno:</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Zde napište ..."
-            required
-          />
-        </div>
-        <br />
-        <div className="form-group">
-          <label htmlFor="surname" className="form-label">Příjmení:</label>
-          <input
-            type="text"
-            id="surname"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            placeholder="Zde napište ..."
-            required
-          />
-        </div>
-        <br />
-        <div className="form-group">
-          <label htmlFor="email" className="form-label">E-mailová adresa:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Zde napište ..."
-            required
-          />
-        </div>
-        <br />
-        <button type="submit" className="register-button">Registrovat</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {submitted && <p>Registrace úspěšná! Zkontrolujte svůj e-mail pro další instrukce.</p>}
-      </form>
+      ) : (
+        <form onSubmit={handleSubmit} className="register-form">
+          <Divider component="li" />
+          <br />
+          <div className="form-group">
+            <label htmlFor="doctorId" className="form-label">Identifikační číslo lékaře:</label>
+            <input
+              type="text"
+              id="doctorId"
+              value={doctorId}
+              onChange={(e) => setDoctorId(e.target.value)}
+              placeholder="Zde napište ..."
+              required
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <label htmlFor="name" className="form-label">Jméno:</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Zde napište ..."
+              required
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <label htmlFor="surname" className="form-label">Příjmení:</label>
+            <input
+              type="text"
+              id="surname"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              placeholder="Zde napište ..."
+              required
+            />
+          </div>
+          <br />
+          <div className="form-group">
+            <label htmlFor="email" className="form-label">E-mailová adresa:</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Zde napište ..."
+              required
+            />
+          </div>
+          <br />
+          <button type="submit" className="register-button">Registrovat</button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+      )}
     </div>
   );
 };
