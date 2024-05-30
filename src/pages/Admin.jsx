@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
-import Header from '../Components/Header';
-import Sidebar from "../Components/Sidebar";
+import emailjs from 'emailjs-com';
+import Header from '../components/Header';
+import Sidebar from "../components/Sidebar";
 import '../styles/Admin.scss';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
@@ -105,6 +106,25 @@ const Admin = () => {
         return password;
     };
 
+    const sendEmail = async (email, password) => {
+        const serviceId = 'service_ozjb931';
+        const templateId = 'template_j6wwgbq';
+        const userId = 'AootbUNDd-j9Gna6i';
+
+        const templateParams = {
+            email,
+            password,
+            odkaz: 'https://your-login-page-link.com'  // Add any additional parameters your template requires
+        };
+
+        try {
+            await emailjs.send(serviceId, templateId, templateParams, userId);
+            console.log('Email sent successfully');
+        } catch (error) {
+            console.error('Error sending email:', error);
+        }
+    };
+
     const handleAccept = async (entry) => {
         try {
             console.log(`Accepting entry with ID: ${entry.id}`);
@@ -122,6 +142,7 @@ const Admin = () => {
 
             if (error) throw error;
 
+            await sendEmail(entry.email, password);
             await handleRemove(entry.id);
         } catch (error) {
             setError('Failed to accept the entry.');
@@ -157,12 +178,12 @@ const Admin = () => {
     return (
         <div className="admin-dashboard">
             <Header />
+            <Sidebar 
+                users={userVideoData}
+                onSelectUser={showRegisteredUsers}
+                showPendingUsers={showPendingUsers}
+            />
             <div className="admin-content">
-                <Sidebar 
-                    users={userVideoData}
-                    onSelectUser={showRegisteredUsers}
-                    showPendingUsers={showPendingUsers}
-                />
                 <div className="admin-main">
                     {error && <div className="error">{error}</div>}
                     {!selectedUser ? (

@@ -7,11 +7,9 @@
 .admin-content {
   display: flex;
   flex: 1;
-  margin-left: 250px; // Adjust for the sidebar width
   padding-top: 60px; // Adjust for the header height
 
   @media (max-width: 768px) {
-      margin-left: 0;
       flex-direction: column;
   }
 }

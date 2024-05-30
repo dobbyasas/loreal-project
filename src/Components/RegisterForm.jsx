@@ -13,7 +13,6 @@ const RegisterForm = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [submitted, setSubmitted] = useState(false);
 
@@ -47,12 +46,10 @@ const RegisterForm = () => {
         return;
       }
 
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
 
       const { data, error } = await supabase
         .from('pending')
-        .insert([{ doctor_id: doctorId, name: name, surname: surname, email: email, password: hashedPassword }]);
+        .insert([{ doctor_id: doctorId, name: name, surname: surname, email: email }]);
 
       if (error) throw error;
 
@@ -79,7 +76,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        <br /><br />
+        <br />
         <div className="form-group">
           <label htmlFor="name" className="form-label">Jméno:</label>
           <input
@@ -91,7 +88,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        <br /><br />
+        <br />
         <div className="form-group">
           <label htmlFor="surname" className="form-label">Příjmení:</label>
           <input
@@ -103,7 +100,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        <br /><br />
+        <br />
         <div className="form-group">
           <label htmlFor="email" className="form-label">E-mailová adresa:</label>
           <input
@@ -115,18 +112,7 @@ const RegisterForm = () => {
             required
           />
         </div>
-        <br /><br />
-        <div className="form-group">
-          <label htmlFor="password" className="form-label">Heslo:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Zde napište ..."
-            required
-          />
-        </div>
+        <br />
         <button type="submit" className="register-button">Registrovat</button>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {submitted && <p>Registrace úspěšná! Zkontrolujte svůj e-mail pro další instrukce.</p>}

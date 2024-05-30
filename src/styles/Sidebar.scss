@@ -1,9 +1,8 @@
 .sidebar {
-    width: 250px;
+    width: 100%;
     background-color: #f8f9fa;
     padding: 20px;
-    height: 100vh; // Make the sidebar cover the full height
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -45,11 +44,6 @@
     }
 
     @media (max-width: 768px) {
-        position: relative;
-        width: 100%;
-        height: auto;
-        padding: 10px;
-
         button {
             font-size: 14px;
             padding: 8px;
