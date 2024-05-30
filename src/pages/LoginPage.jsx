@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import RegisterForm from "../components/RegisterForm";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../Components/LoginForm";
 import '../styles/LoginPage.scss';
 
 const LoginPage = () => {
