@@ -192,7 +192,7 @@ const Admin = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Identifikační číslo lékaře</th>
+                                        <th>Uživatel</th>
                                         <th>E-mailová adresa</th>
                                         <th>Čas vytvoření</th>
                                         <th>Akce</th>
@@ -201,7 +201,7 @@ const Admin = () => {
                                 <tbody>
                                     {pendingEntries.map(entry => (
                                         <tr key={entry.id}>
-                                            <td>{entry.doctor_id}</td>
+                                            <td>{`${entry.name} ${entry.surname}`}</td>
                                             <td>{entry.email}</td>
                                             <td>{new Date(entry.created_at).toLocaleString()}</td>
                                             <td>
