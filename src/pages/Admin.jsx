@@ -1,18 +1,16 @@
+// src/components/Admin.jsx
 import React, { useState, useEffect } from "react";
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../supabaseClient';
 import emailjs from 'emailjs-com';
-import Header from '../Components/Header';
-import Sidebar from "../Components/Sidebar";
+import Header from '../components/Header';
+import Sidebar from "../components/Sidebar";
 import '../styles/Admin.scss';
-
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const Admin = () => {
     const [pendingEntries, setPendingEntries] = useState([]);
     const [userVideoData, setUserVideoData] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [showAll, setShowAll] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -169,10 +167,17 @@ const Admin = () => {
 
     const showPendingUsers = () => {
         setSelectedUser(null);
+        setShowAll(false);
     };
 
     const showRegisteredUsers = (user) => {
         setSelectedUser(user);
+        setShowAll(false);
+    };
+
+    const showAllUsers = () => {
+        setSelectedUser(null);
+        setShowAll(true);
     };
 
     return (
@@ -181,12 +186,37 @@ const Admin = () => {
             <Sidebar 
                 users={userVideoData}
                 onSelectUser={showRegisteredUsers}
+                showAllUsers={showAllUsers}
                 showPendingUsers={showPendingUsers}
             />
             <div className="admin-content">
                 <div className="admin-main">
                     {error && <div className="error">{error}</div>}
-                    {!selectedUser ? (
+                    {showAll ? (
+                        <>
+                            <h1>Všichni registrovaní uživatelé</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Identifikační číslo lékaře</th>
+                                        <th>Uživatel</th>
+                                        <th>E-mailová adresa</th>
+                                        <th>Stav</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userVideoData.map(user => (
+                                        <tr key={user.id}>
+                                            <td>{user.doctor_id}</td>
+                                            <td>{`${user.name} ${user.surname}`}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.videosWatched.length > 0 ? 'Sledoval' : 'Nesledoval'}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </>
+                    ) : !selectedUser ? (
                         <>
                             <h1>Tabulka uživatelů, čekajících na schválení</h1>
                             <table>

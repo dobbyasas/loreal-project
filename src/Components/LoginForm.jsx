@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/LoginForm.scss';
 import Divider from '@mui/material/Divider';
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
 const LoginForm = () => {
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,20 +18,7 @@ const LoginForm = () => {
     setError('');
 
     try {
-      const { data: user, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('doctor_id', username)
-        .single();
-
-      if (error || !user) {
-        throw new Error('Invalid login credentials');
-      }
-
-      if (user.password !== password) {
-        throw new Error('Invalid login credentials');
-      }
-
+      const user = await login(username, password);
       if (user.is_admin) {
         navigate('/admin');
       } else {

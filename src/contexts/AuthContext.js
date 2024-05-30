@@ -1,9 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
-
-const supabaseUrl = 'https://qlwylaqkynxaljlctznm.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsd3lsYXFreW54YWxqbGN0em5tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQwNTcyMzEsImV4cCI6MjAyOTYzMzIzMX0.IDuXkcQY163Nrm4tWl8r3AMHAEetc_rdz4AyBNuJRIE';
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from '../supabaseClient';
 
 const AuthContext = createContext();
 
@@ -13,11 +9,20 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
+      console.log('Session data:', session);
 
-      supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setUser(session.user);
+      }
+
+      const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+        console.log('Auth state changed:', session);
         setUser(session?.user ?? null);
       });
+
+      return () => {
+        authListener?.unsubscribe();
+      };
     };
 
     getSession();
@@ -35,10 +40,11 @@ export const AuthProvider = ({ children }) => {
         throw new Error('User not found');
       }
 
-      if (password !== 'password123') {
+      if (password !== data.password) {
         throw new Error('Invalid password');
       }
 
+      console.log('Login successful:', data);
       setUser(data);
       return data;
     } catch (error) {

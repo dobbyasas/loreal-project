@@ -1,11 +1,8 @@
+// src/components/RegisterForm.jsx
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '../supabaseClient';
 import '../styles/RegisterForm.scss';
 import Divider from '@mui/material/Divider';
-
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const RegisterForm = () => {
   const [doctorId, setDoctorId] = useState('');
@@ -64,7 +61,6 @@ const RegisterForm = () => {
           <p><b>Děkujeme vám za zájem o přednášky ze Scalp and Hair Academy. </b></p>
           <p><b>Vaše žádost byla zaslána administrátorovi stránky a až bude potvrzena, obdržíte e-mail s možností přihlášení. </b></p>
           <p><b>V případě nejasností prosím kontaktujte zástupce společnosti L’Oréal.</b></p>
-          
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="register-form">
