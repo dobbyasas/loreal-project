@@ -1,27 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
-import RegisterForm from '../Components/RegisterForm';
-import LoginForm from "../Components/LoginForm";
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from "../components/LoginForm";
 import '../styles/LoginPage.scss';
 
 const LoginPage = () => {
   const [activeForm, setActiveForm] = useState('register');
   const buttonGroupRef = useRef(null);
 
+  const updateBorder = () => {
+    const buttons = buttonGroupRef.current.querySelectorAll('button');
+    const activeButton = buttonGroupRef.current.querySelector('.active');
+    if (activeButton) {
+      const borderLeft = activeButton.offsetLeft + 'px';
+      const borderWidth = activeButton.offsetWidth + 'px';
+      buttonGroupRef.current.style.setProperty('--border-left', borderLeft);
+      buttonGroupRef.current.style.setProperty('--border-width', borderWidth);
+    }
+  };
+
   useEffect(() => {
-    const updateBorder = () => {
-      const buttons = buttonGroupRef.current.querySelectorAll('button');
-      const activeButton = buttonGroupRef.current.querySelector('.active');
-      if (activeButton) {
-        const borderLeft = activeButton.offsetLeft + 'px';
-        const borderWidth = activeButton.offsetWidth + 'px';
-        buttonGroupRef.current.style.setProperty('--border-left', borderLeft);
-        buttonGroupRef.current.style.setProperty('--border-width', borderWidth);
-      }
+    const handleLoad = () => {
+      updateBorder();
+      window.addEventListener('resize', updateBorder);
     };
 
+    window.addEventListener('load', handleLoad);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('resize', updateBorder);
+    };
+  }, []);
+
+  useEffect(() => {
     updateBorder();
-    window.addEventListener('resize', updateBorder);
-    return () => window.removeEventListener('resize', updateBorder);
   }, [activeForm]);
 
   return (

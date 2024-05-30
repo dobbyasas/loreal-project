@@ -1,5 +1,3 @@
-// HomeHeader.scss
-
 .header {
   padding: 70px;
   padding-top: 40px;
@@ -10,20 +8,33 @@
   list-style: none;
 
   .header-logo {
-    grid-area: 1 / 1 / 2 / 5;
+    grid-area: 1 / 1 / 2 / 4;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: start;
-    overflow: auto;
 
-    .logo {
-      max-height: 75px;
-      margin-right: 10px;
+    .group {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .logo {
+        max-height: 75px;
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
     }
   }
 
   .header-info {
-    grid-area: 2 / 1 / 3 / 5;
+    grid-area: 2 / 1 / 3 / 4;
     padding: 20px;
 
     h1 {
@@ -37,8 +48,9 @@
   }
 
   .header-profile {
-    grid-area: 1 / 5 / 3 / 7;
+    grid-area: 1 / 4 / 3 / 7;
     padding: 20px;
+    text-align: center;
 
     .profile-image {
       width: auto;
@@ -89,9 +101,11 @@
       grid-area: 1 / 1 / 2 / 2;
       justify-content: center;
 
-      .logo {
-        max-height: 50px;
-        margin-right: 5px;
+      .group {
+        .logo {
+          max-height: 50px;
+          margin-right: 5px;
+        }
       }
     }
 

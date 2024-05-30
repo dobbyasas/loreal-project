@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
+import Header from '../components/Header';
+import Sidebar from "../components/Sidebar";
 import '../styles/Admin.scss';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
@@ -9,75 +11,76 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const Admin = () => {
     const [pendingEntries, setPendingEntries] = useState([]);
     const [userVideoData, setUserVideoData] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchPendingEntries = async () => {
-            try {
-                let { data, error } = await supabase
-                    .from('pending')
-                    .select('*');
-
-                if (error) throw error;
-                setPendingEntries(data);
-            } catch (error) {
-                setError('Failed to fetch data from the database.');
-                console.error('Error:', error);
-            }
-        };
-
-        const fetchUserVideoData = async () => {
-            try {
-                let { data: users, error: userError } = await supabase
-                    .from('users')
-                    .select('*');
-
-                if (userError) throw userError;
-
-                let { data: videoViews, error: videoError } = await supabase
-                    .from('video_views')
-                    .select('*');
-
-                if (videoError) throw videoError;
-
-                const response = await fetch('/data/video.json');
-                if (!response.ok) throw new Error('Network response was not ok');
-                const videos = await response.json();
-
-                // Aggregate data
-                const aggregatedData = users.map(user => {
-                    const userViews = videoViews.filter(view => view.user_id === user.id);
-                    const videosWatched = userViews.map(view => {
-                        const video = videos.find(v => v.fileName === view.video_id);
-                        const duration = video ? video.duration : 0;
-                        const watchedPercentage = (view.time_watched / duration) * 100;
-                        const finished = watchedPercentage >= 85;
-                        return {
-                            videoName: video ? video.customName : view.video_id,
-                            timeWatched: view.time_watched,
-                            finished
-                        };
-                    });
-                    return {
-                        ...user,
-                        videosWatched
-                    };
-                });
-
-                setUserVideoData(aggregatedData);
-            } catch (error) {
-                setError('Failed to fetch user video data from the database.');
-                console.error('Error:', error);
-            }
-        };
-
         fetchPendingEntries();
         fetchUserVideoData();
     }, []);
 
+    const fetchPendingEntries = async () => {
+        try {
+            let { data, error } = await supabase
+                .from('pending')
+                .select('*');
+
+            if (error) throw error;
+            setPendingEntries(data);
+        } catch (error) {
+            setError('Failed to fetch data from the database.');
+            console.error('Error:', error);
+        }
+    };
+
+    const fetchUserVideoData = async () => {
+        try {
+            let { data: users, error: userError } = await supabase
+                .from('users')
+                .select('*');
+
+            if (userError) throw userError;
+
+            let { data: videoViews, error: videoError } = await supabase
+                .from('video_views')
+                .select('*');
+
+            if (videoError) throw videoError;
+
+            const response = await fetch('/data/video.json');
+            if (!response.ok) throw new Error('Network response was not ok');
+            const videos = await response.json();
+
+            // Aggregate data
+            const aggregatedData = users.map(user => {
+                const userViews = videoViews.filter(view => view.user_id === user.id);
+                const videosWatched = userViews.map(view => {
+                    const video = videos.find(v => v.fileName === view.video_id);
+                    const duration = video ? video.duration : 0;
+                    const watchedPercentage = (view.time_watched / duration) * 100;
+                    const finished = watchedPercentage >= 85;
+                    return {
+                        videoName: video ? video.customName : view.video_id,
+                        timeWatched: view.time_watched,
+                        videoDuration: duration,
+                        finished
+                    };
+                });
+                return {
+                    ...user,
+                    videosWatched
+                };
+            });
+
+            setUserVideoData(aggregatedData);
+        } catch (error) {
+            setError('Failed to fetch user video data from the database.');
+            console.error('Error:', error);
+        }
+    };
+
     const handleRemove = async (id) => {
         try {
-            // Delete the entry from the "pending" table
             const { data, error } = await supabase
                 .from('pending')
                 .delete()
@@ -85,7 +88,6 @@ const Admin = () => {
 
             if (error) throw error;
 
-            // Update the state to remove the deleted entry
             setPendingEntries(pendingEntries.filter(entry => entry.id !== id));
         } catch (error) {
             setError('Failed to remove the entry.');
@@ -93,18 +95,33 @@ const Admin = () => {
         }
     };
 
+    const generatePassword = () => {
+        const length = 8;
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        let password = "";
+        for (let i = 0, n = charset.length; i < length; ++i) {
+            password += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return password;
+    };
+
     const handleAccept = async (entry) => {
         try {
             console.log(`Accepting entry with ID: ${entry.id}`);
+            const password = generatePassword();
 
-            // Insert the accepted entry into the "users" table
             const { data, error } = await supabase
                 .from('users')
-                .insert([{ doctor_id: entry.doctor_id, email: entry.email }]);
+                .insert([{
+                    doctor_id: entry.doctor_id,
+                    email: entry.email,
+                    name: entry.name,
+                    surname: entry.surname,
+                    password: password
+                }]);
 
             if (error) throw error;
 
-            // Remove the entry from the "pending" table
             await handleRemove(entry.id);
         } catch (error) {
             setError('Failed to accept the entry.');
@@ -129,63 +146,86 @@ const Admin = () => {
         return `${h}:${m}:${s}`;
     };
 
+    const showPendingUsers = () => {
+        setSelectedUser(null);
+    };
+
+    const showRegisteredUsers = (user) => {
+        setSelectedUser(user);
+    };
+
     return (
-        <div className="admin-container">
-            <h1>Tabulka uživatelů, čekajících na schválení</h1>
-            {error && <div className="error">{error}</div>}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Identifikační číslo lékaře</th>
-                        <th>E-mailová adresa</th>
-                        <th>Čas vytvoření</th>
-                        <th>Akce</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pendingEntries.map(entry => (
-                        <tr key={entry.id}>
-                            <td>{entry.doctor_id}</td>
-                            <td>{entry.email}</td>
-                            <td>{new Date(entry.created_at).toLocaleString()}</td>
-                            <td>
-                                <div className="admin-buttons">
-                                    <button className="accept-button" onClick={() => handleAccept(entry)}>Přijmout</button>
-                                    <button className="reject-button" onClick={() => handleReject(entry.id)}>Odmítnout</button>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            <h1>Statistiky uživatelů</h1>
-            {userVideoData.map(user => (
-                <div key={user.id} className="user-stats">
-                    <h2>{`Lékař ID: ${user.doctor_id} (${user.email})`}</h2>
-                    {user.videosWatched.length > 0 ? (
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Název videa</th>
-                                    <th>Čas sledování</th>
-                                    <th>Stav</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {user.videosWatched.map((video, index) => (
-                                    <tr key={index}>
-                                        <td>{video.videoName}</td>
-                                        <td>{formatTime(video.timeWatched)}</td>
-                                        <td>{video.finished ? 'Dokončeno' : 'Nedokončeno'}</td>
+        <div className="admin-dashboard">
+            <Header />
+            <div className="admin-content">
+                <Sidebar 
+                    users={userVideoData}
+                    onSelectUser={showRegisteredUsers}
+                    showPendingUsers={showPendingUsers}
+                />
+                <div className="admin-main">
+                    {error && <div className="error">{error}</div>}
+                    {!selectedUser ? (
+                        <>
+                            <h1>Tabulka uživatelů, čekajících na schválení</h1>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Identifikační číslo lékaře</th>
+                                        <th>E-mailová adresa</th>
+                                        <th>Čas vytvoření</th>
+                                        <th>Akce</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {pendingEntries.map(entry => (
+                                        <tr key={entry.id}>
+                                            <td>{entry.doctor_id}</td>
+                                            <td>{entry.email}</td>
+                                            <td>{new Date(entry.created_at).toLocaleString()}</td>
+                                            <td>
+                                                <div className="admin-buttons">
+                                                    <button className="accept-button" onClick={() => handleAccept(entry)}>Přijmout</button>
+                                                    <button className="reject-button" onClick={() => handleReject(entry.id)}>Odmítnout</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </>
                     ) : (
-                        <p>Uživatel zatím nesledoval žádné video.</p>
+                        <>
+                            <h1>Statistiky uživatelů</h1>
+                            <div className="user-stats">
+                                <h2>{`Lékař ID: ${selectedUser.doctor_id} (${selectedUser.email})`}</h2>
+                                {selectedUser.videosWatched.length > 0 ? (
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Název videa</th>
+                                                <th>Čas sledování</th>
+                                                <th>Stav</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {selectedUser.videosWatched.map((video, index) => (
+                                                <tr key={index}>
+                                                    <td>{video.videoName}</td>
+                                                    <td>{`${formatTime(video.timeWatched)} / ${formatTime(video.videoDuration)}`}</td>
+                                                    <td>{video.finished ? 'Dokončeno' : 'Nedokončeno'}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <p>Uživatel zatím nesledoval žádné video.</p>
+                                )}
+                            </div>
+                        </>
                     )}
                 </div>
-            ))}
+            </div>
         </div>
     );
 }

@@ -1,14 +1,33 @@
-.admin-container {
-  font-family: Arial, sans-serif;
-  padding: 20px;
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  max-width: 130vh;
+}
+
+.admin-content {
+  display: flex;
+  flex: 1;
+  margin-left: 250px; // Adjust for the sidebar width
+  padding-top: 60px; // Adjust for the header height
+
+  @media (max-width: 768px) {
+      margin-left: 0;
+      flex-direction: column;
+  }
+}
+
+.admin-main {
+  flex: 1;
+  padding: 20px;
+
+  @media (max-width: 768px) {
+      padding: 10px;
+  }
 }
 
 h1 {
   color: #333;
   margin-bottom: 20px;
-
   text-align: center;
 }
 
@@ -49,19 +68,19 @@ td {
   transition: background-color 0.3s ease;
 
   &.accept-button {
-    background-color: #28a745;
+      background-color: #28a745;
   }
 
   &.reject-button {
-    background-color: #dc3545;
+      background-color: #dc3545;
   }
 
   &:hover {
-    opacity: 0.9;
+      opacity: 0.9;
   }
 
   &:focus {
-    outline: none;
+      outline: none;
   }
 }
 
