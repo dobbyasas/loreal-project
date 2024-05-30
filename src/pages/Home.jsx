@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HomeHeader from '../components/HomeHeader';
+import HomeHeader from '../Components/HomeHeader';
 import Videos from '../components/Videos';
 import Footer from '../components/Footer';
 
