@@ -7,7 +7,7 @@
 .admin-content {
   display: flex;
   flex: 1;
-  padding-top: 60px; // Adjust for the header height
+  padding-top: 60px;
 
   @media (max-width: 768px) {
       flex-direction: column;

@@ -36,7 +36,7 @@ const VideoPlayer = () => {
                     .eq('video_id', fileName)
                     .single();
 
-                if (error && error.code !== 'PGRST116') { // Ignore no rows found error
+                if (error && error.code !== 'PGRST116') {
                     throw error;
                 }
 
@@ -126,7 +126,7 @@ const VideoPlayer = () => {
                     const currentTime = videoRef.current.currentTime;
                     logTimeWatched(currentTime);
                 }
-            }, 10000); // Log every 10 seconds
+            }, 10000);
         }
 
         return () => {

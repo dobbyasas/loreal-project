@@ -114,7 +114,7 @@ const Admin = () => {
         const templateParams = {
             email,
             password,
-            odkaz: 'https://your-login-page-link.com'  // Add any additional parameters your template requires
+            odkaz: 'https://your-login-page-link.com'
         };
 
         try {

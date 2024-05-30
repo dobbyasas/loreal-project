@@ -35,7 +35,6 @@ const LoginForm = () => {
         throw new Error('Invalid login credentials');
       }
 
-      // Check if the user is an admin
       if (user.is_admin) {
         navigate('/admin');
       } else {

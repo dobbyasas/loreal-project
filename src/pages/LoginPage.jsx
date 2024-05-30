@@ -36,6 +36,14 @@ const LoginPage = () => {
     updateBorder();
   }, [activeForm]);
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <div className="login-page">
       <div className="form-container">

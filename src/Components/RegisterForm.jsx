@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import bcrypt from 'bcryptjs';
 import '../styles/RegisterForm.scss';
 import Divider from '@mui/material/Divider';
 
@@ -21,7 +20,6 @@ const RegisterForm = () => {
     setError(null);
 
     try {
-      // Check if doctor_id or email already exists
       let { data: existingDoctorId, error: doctorIdError } = await supabase
         .from('pending')
         .select('doctor_id')
@@ -63,7 +61,7 @@ const RegisterForm = () => {
     <div className="register-container">
       {submitted ? (
         <div className="success-message">
-          <p><b>Registrace úspěšná! Zkontrolujte svůj e-mail pro další instrukce.</b></p>
+          <p><b>Děkujeme vám za zájem o přednášky ze Scalp and Hair Academy. Vaše žádost byla zaslána administrátorovi stránky a až bude potvrzena, obdržíte e-mail s možností přihlášení. V případě nejasností prosím kontaktujte zástupce společnosti L’Oréal.</b></p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="register-form">
