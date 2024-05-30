@@ -1,8 +1,8 @@
 import React from 'react';
 
-import HomeHeader from '../components/HomeHeader';
-import Videos from '../components/Videos';
-import Footer from '../components/Footer';
+import HomeHeader from '../Components/HomeHeader';
+import Videos from '../Components/Videos';
+import Footer from '../Components/Footer';
 
 import '../styles/Home.scss';
 
