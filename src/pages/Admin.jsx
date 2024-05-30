@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { createClient } from '@supabase/supabase-js';
 import emailjs from 'emailjs-com';
 import Header from '../Components/Header';
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../Components/Sidebar";
 import '../styles/Admin.scss';
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
