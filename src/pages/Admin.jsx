@@ -102,6 +102,9 @@ const Admin = () => {
         return password;
     };
 
+    const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+
+
     const sendEmail = async (email, password) => {
         const apiUrl = 'https://www.emailkampane.cz/api/xml.php';
         const xmlData = `
@@ -122,7 +125,7 @@ const Admin = () => {
         </xml>`;
 
         try {
-            const response = await axios.post(apiUrl, xmlData, {
+            const response = await axios.post(`${corsProxyUrl}${apiUrl}`, xmlData, {
                 headers: {
                     'Content-Type': 'text/xml'
                 }
