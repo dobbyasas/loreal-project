@@ -1,7 +1,6 @@
-// src/components/Admin.jsx
 import React, { useState, useEffect } from "react";
 import { supabase } from '../supabaseClient';
-import emailjs from 'emailjs-com';
+import axios from 'axios';
 import Header from '../Components/Header';
 import Sidebar from "../Components/Sidebar";
 import '../styles/Admin.scss';
@@ -50,7 +49,6 @@ const Admin = () => {
             if (!response.ok) throw new Error('Network response was not ok');
             const videos = await response.json();
 
-            // Aggregate data
             const aggregatedData = users.map(user => {
                 const userViews = videoViews.filter(view => view.user_id === user.id);
                 const videosWatched = userViews.map(view => {
@@ -105,21 +103,33 @@ const Admin = () => {
     };
 
     const sendEmail = async (email, password) => {
-        const serviceId = 'service_ozjb931';
-        const templateId = 'template_j6wwgbq';
-        const userId = 'AootbUNDd-j9Gna6i';
-
-        const templateParams = {
-            email,
-            password,
-            odkaz: 'https://your-login-page-link.com'
-        };
+        const apiUrl = 'https://www.emailkampane.cz/api/xml.php';
+        const xmlData = `
+        <?xml version="1.0" encoding="utf-8"?>
+        <xml>
+            <username>martin@devguerilla.cz</username>
+            <api_hash>E09B0A1B-8C06-4170-B028-6EFFAC342118</api_hash>
+            <action>campaign</action>
+            <action_type>send_ar</action_type>
+            <contact>
+                <campaign_id>199423</campaign_id>
+                <email>${email}</email>
+                <attributes>
+                    <link>https://your-login-page-link.com</link>
+                    <password>${password}</password>
+                </attributes>
+            </contact>
+        </xml>`;
 
         try {
-            await emailjs.send(serviceId, templateId, templateParams, userId);
-            console.log('Email sent successfully');
+            const response = await axios.post(apiUrl, xmlData, {
+                headers: {
+                    'Content-Type': 'text/xml'
+                }
+            });
+            console.log('Email sent succesfully', response.data);
         } catch (error) {
-            console.error('Error sending email:', error);
+            console.error('Error: seding data: ', error.response ? error.response.data : error.message);
         }
     };
 
