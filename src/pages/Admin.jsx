@@ -102,26 +102,25 @@ const Admin = () => {
         return password;
     };
 
-    const sendEmail = (email, password) => {
+    const sendEmail = async (email, password) => {
         const serviceID = 'service_taletyk';
         const templateID = 'template_rly51l3';
-        const userID = 'martin@eventguerilla.cz';
-
+    
         const templateParams = {
-            to_email: email,
+            email: email,
             password: password,
-            login_link: 'https://your-login-page-link.com'
+            login_link: 'https://your-login-page-link.com/',
         };
-
-        emailjs.send(serviceID, templateID, templateParams, userID)
-            .then(response => {
-                console.log('Email sent successfully:', response.status, response.text);
-            })
-            .catch(error => {
-                console.error('Failed to send email:', error);
-                setError('Failed to send the email.');
+    
+        try {
+            const response = await emailjs.send(serviceID, templateID, templateParams, {
+                publicKey: 'C4s_lHDeCVHugnJvo',
             });
-    };
+            console.log('Email sent successfully:', response.status, response.text);
+        } catch (error) {
+            console.error('Failed to send email:', error);
+        }
+    };    
 
     const handleAccept = async (entry) => {
         try {
