@@ -109,18 +109,17 @@ const Admin = () => {
         const templateParams = {
             email: email,
             password: password,
-            login_link: 'https://your-login-page-link.com/',
+            login_link: 'https://your-login-page-link.com/'
         };
     
         try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, {
-                publicKey: 'C4s_lHDeCVHugnJvo',
-            });
+            const response = await emailjs.send(serviceID, templateID, templateParams, 'C4s_lHDeCVHugnJvo');
             console.log('Email sent successfully:', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
-    };    
+    };
+    
 
     const handleAccept = async (entry) => {
         try {
