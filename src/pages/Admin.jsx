@@ -115,17 +115,18 @@ const Admin = () => {
     
         const attachments = [{
             filename: 'loreal.png',
-            path: '/images/loreal.png',
+            path: 'src/assets/logo/loreal.png',
             cid: 'loreal_logo'
         }];
     
         try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, userID, attachments);
+            const response = await emailjs.send(serviceID, templateID, templateParams, userID, { attachments });
             console.log('Email sent successfully:', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
     };
+    
 
     const handleAccept = async (entry) => {
         try {
