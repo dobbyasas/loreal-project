@@ -105,21 +105,27 @@ const Admin = () => {
     const sendEmail = async (email, password) => {
         const serviceID = 'service_taletyk';
         const templateID = 'template_rly51l3';
+        const userID = 'C4s_lHDeCVHugnJvo';
     
         const templateParams = {
             email: email,
             password: password,
-            login_link: 'https://your-login-page-link.com/'
+            odkaz: 'https://your-login-page-link.com/'
         };
     
+        const attachments = [{
+            filename: 'loreal.png',
+            path: '/images/loreal.png',
+            cid: 'loreal_logo'
+        }];
+    
         try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, 'C4s_lHDeCVHugnJvo');
+            const response = await emailjs.send(serviceID, templateID, templateParams, userID, attachments);
             console.log('Email sent successfully:', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
     };
-    
 
     const handleAccept = async (entry) => {
         try {
