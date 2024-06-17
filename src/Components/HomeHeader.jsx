@@ -22,7 +22,7 @@ const HomeHeader = () => {
         <p>Vzdělávací akce je pořádána dle Stavovského předpisu ČLK č. 16 pod číslem 112465 a bude ohodnocena 6. KREDITY. Podmínkou přidělení kreditů je zhlédnutí přednášek a odeslání registračního formuláře</p>
       </div>
       <div className="header-profile">
-        <img src="/images/monika.png" alt="Prof. MUDr. Monika Arenbergerová, Ph.D." className="profile-image" />
+        <img src="/images/monika.jpeg" alt="Prof. MUDr. Monika Arenbergerová, Ph.D." className="profile-image" />
         <div className="name-area">
           <h2>prof. MUDr. Monika Arenbergerová, Ph.D.</h2>
           <Divider component="li" />
