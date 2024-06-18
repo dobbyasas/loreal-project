@@ -102,35 +102,44 @@ const Admin = () => {
         return password;
     };
 
+    const getBase64Image = (imgUrl, callback) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open('GET', imgUrl);
+        xhr.responseType = 'blob';
+        xhr.send();
+    };
+
     const sendEmail = async (email, password) => {
         const serviceID = 'service_taletyk';
         const templateID = 'template_rly51l3';
         const userID = 'C4s_lHDeCVHugnJvo';
-    
+
         const templateParams = {
             email: email,
             password: password,
             odkaz: 'https://your-login-page-link.com/'
         };
-    
-        try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, userID, {
-                attachments: [
-                    {
-                        filename: 'loreal.png',
-                        path: `${window.location.origin}/assets/logo/loreal.png`,
-                        cid: 'loreal_logo'
-                    }
-                ]
-            });
-            console.log('Email sent successfully:', response.status, response.text);
-        } catch (error) {
-            console.error('Failed to send email:', error);
-        }
+
+        // Convert the image to base64
+        getBase64Image('/assets/logo/loreal.png', async (base64Image) => {
+            templateParams.logo = base64Image;
+
+            // Now send the email with the base64 image embedded
+            try {
+                const response = await emailjs.send(serviceID, templateID, templateParams, userID);
+                console.log('Email sent successfully:', response.status, response.text);
+            } catch (error) {
+                console.error('Failed to send email:', error);
+            }
+        });
     };
-    
-    
-    
 
     const handleAccept = async (entry) => {
         try {
