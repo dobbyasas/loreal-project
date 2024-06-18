@@ -2,7 +2,6 @@ import React from 'react';
 
 import HomeHeader from '../Components/HomeHeader';
 import Videos from '../Components/Videos';
-import Footer from '../Components/Footer';
 
 import '../styles/Home.scss';
 
@@ -11,7 +10,6 @@ const Home = () => {
     <div className="home-container">
       <HomeHeader />
       <Videos />
-      <Footer />
     </div>
   );
 };

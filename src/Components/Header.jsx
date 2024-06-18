@@ -13,7 +13,6 @@ function Header() {
         <header className="small-header">
             <div className="small-header-logo">
                 <img src="/images/conference.png" alt="Logo 1" className="logo" />
-                <img src="/images/loreal.png" alt="Logo 2" className="logo" />
                 <img src="/images/jep.png" alt="Logo 4" className="logo" />
                 <img src="/images/purkyne.png" alt="Logo 5" className="logo" />
             </div>
