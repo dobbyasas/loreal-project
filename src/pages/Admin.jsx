@@ -115,8 +115,9 @@ const Admin = () => {
     
         const attachments = [{
             filename: 'loreal.png',
-            path: 'src/assets/logo/loreal.png',
-            cid: 'loreal_logo'
+            path: `${window.location.origin}/assets/logo/loreal.png`,
+            cid: 'loreal_logo',
+            content_type: 'image/png'
         }];
     
         try {
