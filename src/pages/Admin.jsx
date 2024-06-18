@@ -112,21 +112,41 @@ const Admin = () => {
             password: password,
             odkaz: 'https://your-login-page-link.com/'
         };
+
+        const formData = new FormData();
+        formData.append('service_id', serviceID);
+        formData.append('template_id', templateID);
+        formData.append('user_id', userID);
+        Object.keys(templateParams).forEach(key => {
+            formData.append(`template_params[${key}]`, templateParams[key]);
+        });
     
-        const attachments = [{
-            filename: 'loreal.png',
-            path: `${window.location.origin}/assets/logo/loreal.png`,
-            cid: 'loreal_logo',
-            content_type: 'image/png'
-        }];
+        const attachments = [
+            {
+                content: 'src/assets/logo/loreal.png',
+                filename: 'loreal.png',
+                type: 'image/png',
+                disposition: 'inline',
+                content_id: 'loreal_logo'
+            }
+        ];
+    
+        attachments.forEach((attachment, index) => {
+            formData.append(`attachments[${index}][content]`, attachment.content);
+            formData.append(`attachments[${index}][filename]`, attachment.filename);
+            formData.append(`attachments[${index}][type]`, attachment.type);
+            formData.append(`attachments[${index}][disposition]`, attachment.disposition);
+            formData.append(`attachments[${index}][content_id]`, attachment.content_id);
+        });
     
         try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, userID, { attachments });
+            const response = await emailjs.sendForm(serviceID, templateID, formData, userID);
             console.log('Email sent successfully:', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
     };
+    
     
 
     const handleAccept = async (entry) => {
