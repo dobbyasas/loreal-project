@@ -118,12 +118,11 @@ const Admin = () => {
                 attachments: [
                     {
                         filename: 'loreal.png',
-                        path: `${window.location.origin}/assets/logo/loreal.png`, // Path to the image in the public folder
-                        cid: 'loreal_logo' // This must match the CID in your email template
+                        path: `${window.location.origin}/assets/logo/loreal.png`,
+                        cid: 'loreal_logo'
                     }
                 ]
             });
-            console.log('Email sent successfully:', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
@@ -131,7 +130,6 @@ const Admin = () => {
 
     const handleAccept = async (entry) => {
         try {
-            console.log(`Accepting entry with ID: ${entry.id}`);
             const password = generatePassword();
 
             const { data, error } = await supabase
@@ -156,7 +154,6 @@ const Admin = () => {
 
     const handleReject = async (id) => {
         try {
-            console.log(`Rejecting entry with ID: ${id}`);
             await handleRemove(id);
         } catch (error) {
             setError('Failed to reject the entry.');
