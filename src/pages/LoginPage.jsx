@@ -37,9 +37,19 @@ const LoginPage = () => {
   }, [activeForm]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       document.body.style.overflow = 'auto';
     };
   }, []);
