@@ -59,7 +59,7 @@ const LoginPage = () => {
       <div className="form-container">
         <div className="text-container">
           <h1>VÍTEJTE NA STRÁNKÁCH SCALP AND HAIR ACADEMY</h1>
-          <p>Po přihlášení do systému budete přesměrování do galerie videí a fotografií z konference Scalp and Hair Academy 2024</p>
+          <p>Po přihlášení do systému budete přesměrování do galerie videí z konference Scalp and Hair Academy 2024</p>
         </div>
         <div className="button-group" ref={buttonGroupRef}>
           <button 
