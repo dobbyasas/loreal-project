@@ -17,14 +17,14 @@ const HomeHeader = () => {
       <div className="header-info">
         <h1>Informace o přidělování kreditů</h1>
         <Divider component="li" />
-        <p>Vzdělávací akce je pořádána dle Stavovského předpisu ČLK č. 16 pod číslem 116936 a bude ohodnocena 5. KREDITY. Podmínkou přidělení kreditů je zhlédnutí přednášek a odeslání registračního formuláře.</p>
+        <p>Vzdělávací akce je pořádána dle Stavovského předpisu ČLK č. 16 pod číslem 116936 a bude ohodnocena 5. KREDITY. Podmínkou přidělení kreditů je zhlédnutí přednášek a uvedení identifikačního čísla lékaře při registraci.</p>
       </div>
       <div className="header-profile">
         <img src="/images/monika.jpeg" alt="Prof. MUDr. Monika Arenbergerová, Ph.D." className="profile-image" />
         <div className="name-area">
           <h2>prof. MUDr. Monika Arenbergerová, Ph.D.</h2>
           <Divider component="li" />
-          <p>garant</p>
+          <p>Garant Scalp and Hair Academy</p>
         </div>
       </div>
     </header>
