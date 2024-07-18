@@ -59,11 +59,8 @@ const LoginPage = () => {
       <div className="form-container">
         <div className="text-container">
           <h1>VÍTEJTE NA STRÁNKÁCH SCALP AND HAIR ACADEMY</h1>
-          <h1>NA STRÁNCE PRÁVĚ PROBÍHÁ ÚDRŽBA, REGISTRACE A PŘIHLÁŠENÍ, MOMENTÁLNĚ NENÍ MOŽNÉ, OMLOUVÁME SE ZA KOMPLIKACE A DĚKUJEME ZA TRPĚLIVOST.</h1>
-          <h2>STRÁNKA BUDE PLNĚ FUNKČNÍ V 14:00</h2>
-          {/* <p>Po přihlášení do systému budete přesměrování do galerie videí z konference Scalp and Hair Academy 2024</p> */}
+          <p>Po přihlášení do systému budete přesměrování do galerie videí z konference Scalp and Hair Academy 2024</p>
         </div>
-{/*
         <div className="button-group" ref={buttonGroupRef}>
           <button 
             className={activeForm === 'register' ? 'active' : ''} 
@@ -80,9 +77,7 @@ const LoginPage = () => {
         </div>
         {activeForm === 'register' && <RegisterForm />}
         {activeForm === 'login' && <LoginForm />}
-        */}
       </div>
-    
       <div className="image-container">
         <img src="/images/background.png" alt="Scalp and Hair Academy" />
       </div>
