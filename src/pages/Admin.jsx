@@ -106,27 +106,21 @@ const Admin = () => {
         const serviceID = 'service_taletyk';
         const templateID = 'template_rly51l3';
         const userID = 'C4s_lHDeCVHugnJvo';
-
+    
         const templateParams = {
             email: email,
             password: password,
-            odkaz: 'https://your-login-page-link.com/'
+            odkaz: 'https://www.scalpandhairacademy.com'
         };
-
+    
         try {
-            const response = await emailjs.send(serviceID, templateID, templateParams, userID, {
-                attachments: [
-                    {
-                        filename: 'loreal.png',
-                        path: `${window.location.origin}/assets/logo/loreal.png`,
-                        cid: 'loreal_logo'
-                    }
-                ]
-            });
+            const response = await emailjs.send(serviceID, templateID, templateParams, userID);
+            console.log('Email successfully sent!', response.status, response.text);
         } catch (error) {
             console.error('Failed to send email:', error);
         }
     };
+    
 
     const handleAccept = async (entry) => {
         try {
