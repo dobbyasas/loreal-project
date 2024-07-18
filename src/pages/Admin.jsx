@@ -105,14 +105,14 @@ const Admin = () => {
     const sendEmail = async (email, password) => {
         const serviceID = 'service_taletyk';
         const templateID = 'template_rly51l3';
-        const userID = 'C4s_lHDeCVHugnJvo';
+        const userID = '1GJguuXpZRf1ZEyRk';
     
         const templateParams = {
             email: email,
             password: password,
             odkaz: 'https://www.scalpandhairacademy.com'
         };
-    
+
         try {
             const response = await emailjs.send(serviceID, templateID, templateParams, userID);
             console.log('Email successfully sent!', response.status, response.text);
