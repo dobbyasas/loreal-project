@@ -103,7 +103,7 @@ const Admin = () => {
     };
 
     const sendEmail = async (email, password) => {
-        const serviceID = 'service_taletyk';
+        const serviceID = 'service_4rhn4wb';
         const templateID = 'template_rly51l3';
         const userID = '1GJguuXpZRf1ZEyRk';
     
