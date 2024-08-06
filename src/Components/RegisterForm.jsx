@@ -1,4 +1,3 @@
-// src/components/RegisterForm.jsx
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import '../styles/RegisterForm.scss';
