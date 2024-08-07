@@ -101,20 +101,20 @@ const VideoPlayer = () => {
 
     useEffect(() => {
         let interval;
-
+    
         const logTimeWatched = async (currentTime) => {
             if (!user) return;
-            
+    
             const roundedTime = Math.round(currentTime);
             const timeDifference = roundedTime - lastLoggedTime.current;
             lastLoggedTime.current = roundedTime;
-        
+    
             console.log('Logging time watched:', {
                 user_id: user.id,
                 video_id: fileName,
                 time_watched: roundedTime
             });
-        
+    
             try {
                 const { data: existingRecord, error: selectError } = await supabase
                     .from('video_views')
@@ -122,7 +122,7 @@ const VideoPlayer = () => {
                     .eq('user_id', user.id)
                     .eq('video_id', fileName)
                     .single();
-        
+    
                 if (selectError) {
                     if (selectError.code === 'PGRST116') {
                         console.log('No existing record found. Creating a new record.');
@@ -131,7 +131,7 @@ const VideoPlayer = () => {
                         return;
                     }
                 }
-        
+    
                 if (existingRecord) {
                     const newTimeWatched = existingRecord.time_watched + timeDifference;
                     console.log('Updating existing record with new time:', newTimeWatched);
@@ -140,16 +140,12 @@ const VideoPlayer = () => {
                         .update({ time_watched: newTimeWatched })
                         .eq('user_id', user.id)
                         .eq('video_id', fileName);
-        
+    
                     if (updateError) {
                         console.error('Error updating time watched:', updateError.message);
                     }
-                } else {
-                    console.log('Inserting new record with data:', {
-                        user_id: user.id,
-                        video_id: fileName,
-                        time_watched: roundedTime
-                    });                    
+                } else if (!existingRecord && !selectError) {
+                    console.log('Inserting new record with time watched:', roundedTime);
                     const { error: insertError } = await supabase
                         .from('video_views')
                         .insert({
@@ -157,7 +153,7 @@ const VideoPlayer = () => {
                             video_id: fileName,
                             time_watched: roundedTime
                         });
-        
+    
                     if (insertError) {
                         console.error('Error inserting new time watched record:', insertError.message);
                     }
@@ -166,8 +162,7 @@ const VideoPlayer = () => {
                 console.error('Error logging time watched:', error);
             }
         };
-        
-
+    
         if (videoUrl && user && isMetadataLoaded) {
             console.log('Starting interval to log time watched every 10 seconds.');
             interval = setInterval(() => {
@@ -178,7 +173,7 @@ const VideoPlayer = () => {
                 }
             }, 10000);
         }
-
+    
         return () => {
             clearInterval(interval);
             const videoElement = videoRef.current;
@@ -190,7 +185,7 @@ const VideoPlayer = () => {
                 }
             }
         };
-    }, [videoUrl, user, fileName, isMetadataLoaded]);
+    }, [videoUrl, user, fileName, isMetadataLoaded]);    
 
     return (
         <div className="video-player-container">
