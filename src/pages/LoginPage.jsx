@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import RegisterForm from "../Components/RegisterForm";
-import LoginForm from "../Components/LoginForm";
+import RegisterForm from "../components/RegisterForm";
+import LoginForm from "../components/LoginForm";
 import '../styles/LoginPage.scss';
 
 const LoginPage = () => {
@@ -61,6 +61,7 @@ const LoginPage = () => {
           <h1>VÍTEJTE NA STRÁNKÁCH SCALP AND HAIR ACADEMY</h1>
           <p>Po přihlášení do systému budete přesměrování do galerie videí z konference Scalp and Hair Academy 2024</p>
         </div>
+        <h2>Na stránce probíhá údržba, prosíme o strpení.</h2>
         {/*
         <div className="button-group" ref={buttonGroupRef}>
           <button 
@@ -79,9 +80,6 @@ const LoginPage = () => {
         {activeForm === 'register' && <RegisterForm />}
         {activeForm === 'login' && <LoginForm />}
         */}
-        <div>
-          <h2>NA STRÁNCE PROBÍHÁ ÚDRŽBA, PROSÍME O STRPENÍ</h2>
-        </div>
       </div>
       <div className="image-container">
         <img src="/images/background.png" alt="Scalp and Hair Academy" />
