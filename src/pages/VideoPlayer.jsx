@@ -145,7 +145,11 @@ const VideoPlayer = () => {
                         console.error('Error updating time watched:', updateError.message);
                     }
                 } else {
-                    console.log('Inserting new record with time watched:', timeDifference);
+                    console.log('Inserting new record with data:', {
+                        user_id: user.id,
+                        video_id: fileName,
+                        time_watched: roundedTime
+                    });                    
                     const { error: insertError } = await supabase
                         .from('video_views')
                         .insert({
