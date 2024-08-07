@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-// import RegisterForm from "../Components/RegisterForm";
-// import LoginForm from "../Components/LoginForm";
+import RegisterForm from "../Components/RegisterForm";
+import LoginForm from "../Components/LoginForm";
 import '../styles/LoginPage.scss';
 
 const LoginPage = () => {
-  // const [activeForm, setActiveForm] = useState('register');
+  const [activeForm, setActiveForm] = useState('register');
   const buttonGroupRef = useRef(null);
 
   const updateBorder = () => {
-    {/* 
-    // const buttons = buttonGroupRef.current.querySelectorAll('button'); 
-    */}
+    const buttons = buttonGroupRef.current.querySelectorAll('button'); 
     const activeButton = buttonGroupRef.current?.querySelector('.active');
     if (activeButton) {
       const borderLeft = activeButton.offsetLeft + 'px';
@@ -36,7 +34,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     updateBorder();
-  }, []); // removed activeForm dependency since it's not being used now
+  }, [activeForm]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -63,8 +61,7 @@ const LoginPage = () => {
           <h1>VÍTEJTE NA STRÁNKÁCH SCALP AND HAIR ACADEMY</h1>
           <p>Po přihlášení do systému budete přesměrování do galerie videí z konference Scalp and Hair Academy 2024</p>
         </div>
-        <h2>Na stránce probíhá údržba, prosíme o strpení.</h2>
-        {/*
+
         <div className="button-group" ref={buttonGroupRef}>
           <button 
             className={activeForm === 'register' ? 'active' : ''} 
@@ -81,7 +78,7 @@ const LoginPage = () => {
         </div>
         {activeForm === 'register' && <RegisterForm />}
         {activeForm === 'login' && <LoginForm />}
-        */}
+
       </div>
       <div className="image-container">
         <img src="/images/background.png" alt="Scalp and Hair Academy" />

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from '../supabaseClient';
 import emailjs from 'emailjs-com';
-import Header from '../components/Header';
-import Sidebar from "../components/Sidebar";
+import Header from '../Components/Header';
+import Sidebar from "../Components/Sidebar";
 import '../styles/Admin.scss';
 
 const Admin = () => {
@@ -19,35 +19,43 @@ const Admin = () => {
 
     const fetchPendingEntries = async () => {
         try {
+            console.log('Fetching pending entries...');
             let { data, error } = await supabase
                 .from('pending')
                 .select('*');
 
             if (error) throw error;
+            console.log('Pending entries:', data);
             setPendingEntries(data);
         } catch (error) {
             setError('Failed to fetch data from the database.');
-            console.error('Error:', error);
+            console.error('Error fetching pending entries:', error);
         }
     };
 
     const fetchUserVideoData = async () => {
         try {
+            console.log('Fetching user data...');
             let { data: users, error: userError } = await supabase
                 .from('users')
                 .select('*');
 
             if (userError) throw userError;
+            console.log('Users:', users);
 
+            console.log('Fetching video views...');
             let { data: videoViews, error: videoError } = await supabase
                 .from('video_views')
                 .select('*');
 
             if (videoError) throw videoError;
+            console.log('Video views:', videoViews);
 
+            console.log('Fetching video data from /data/video.json...');
             const response = await fetch('/data/video.json');
             if (!response.ok) throw new Error('Network response was not ok');
             const videos = await response.json();
+            console.log('Videos:', videos);
 
             const aggregatedData = users.map(user => {
                 const userViews = videoViews.filter(view => view.user_id === user.id);
@@ -69,26 +77,29 @@ const Admin = () => {
                 };
             });
 
+            console.log('Aggregated user video data:', aggregatedData);
             setUserVideoData(aggregatedData);
         } catch (error) {
             setError('Failed to fetch user video data from the database.');
-            console.error('Error:', error);
+            console.error('Error fetching user video data:', error);
         }
     };
 
     const handleRemove = async (id) => {
         try {
+            console.log(`Removing entry with id: ${id}`);
             const { data, error } = await supabase
                 .from('pending')
                 .delete()
                 .eq('id', id);
 
             if (error) throw error;
+            console.log('Removed entry:', data);
 
             setPendingEntries(pendingEntries.filter(entry => entry.id !== id));
         } catch (error) {
             setError('Failed to remove the entry.');
-            console.error('Error:', error);
+            console.error('Error removing entry:', error);
         }
     };
 
@@ -125,6 +136,7 @@ const Admin = () => {
     const handleAccept = async (entry) => {
         try {
             const password = generatePassword();
+            console.log('Generated password:', password);
 
             const { data, error } = await supabase
                 .from('users')
@@ -137,12 +149,13 @@ const Admin = () => {
                 }]);
 
             if (error) throw error;
+            console.log('Inserted user:', data);
 
-            sendEmail(entry.email, password);
+            await sendEmail(entry.email, password);
             await handleRemove(entry.id);
         } catch (error) {
             setError('Failed to accept the entry.');
-            console.error('Error:', error);
+            console.error('Error accepting entry:', error);
         }
     };
 
@@ -151,7 +164,7 @@ const Admin = () => {
             await handleRemove(id);
         } catch (error) {
             setError('Failed to reject the entry.');
-            console.error('Error:', error);
+            console.error('Error rejecting entry:', error);
         }
     };
 
