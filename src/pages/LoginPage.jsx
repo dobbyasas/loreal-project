@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
-import RegisterForm from "../Components/RegisterForm";
-import LoginForm from "../Components/LoginForm";
+// import RegisterForm from "../Components/RegisterForm";
+// import LoginForm from "../Components/LoginForm";
 import '../styles/LoginPage.scss';
 
 const LoginPage = () => {
-  const [activeForm, setActiveForm] = useState('register');
+  // const [activeForm, setActiveForm] = useState('register');
   const buttonGroupRef = useRef(null);
 
   const updateBorder = () => {
-    {/* const buttons = buttonGroupRef.current.querySelectorAll('button'); */}
-    const activeButton = buttonGroupRef.current.querySelector('.active');
+    {/* 
+    // const buttons = buttonGroupRef.current.querySelectorAll('button'); 
+    */}
+    const activeButton = buttonGroupRef.current?.querySelector('.active');
     if (activeButton) {
       const borderLeft = activeButton.offsetLeft + 'px';
       const borderWidth = activeButton.offsetWidth + 'px';
@@ -34,7 +36,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     updateBorder();
-  }, [activeForm]);
+  }, []); // removed activeForm dependency since it's not being used now
 
   useEffect(() => {
     const handleResize = () => {
