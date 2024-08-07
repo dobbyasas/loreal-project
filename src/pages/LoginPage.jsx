@@ -8,7 +8,7 @@ const LoginPage = () => {
   const buttonGroupRef = useRef(null);
 
   const updateBorder = () => {
-    const buttons = buttonGroupRef.current.querySelectorAll('button');
+    {/* const buttons = buttonGroupRef.current.querySelectorAll('button'); */}
     const activeButton = buttonGroupRef.current.querySelector('.active');
     if (activeButton) {
       const borderLeft = activeButton.offsetLeft + 'px';
