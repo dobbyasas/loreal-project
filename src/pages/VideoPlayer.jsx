@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../Components/Header';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../supabaseClient';
 import '../styles/VideoPlayer.scss';

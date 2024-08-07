@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from '../supabaseClient';
 import emailjs from 'emailjs-com';
-import Header from '../components/Header';
-import Sidebar from "../components/Sidebar";
+import Header from '../Components/Header';
+import Sidebar from "../Components/Sidebar";
 import '../styles/Admin.scss';
 
 const Admin = () => {
